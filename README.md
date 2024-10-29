@@ -46,6 +46,7 @@ Python modules involved in this module are:
 -   `numpy`
 -   `pandas`
 -   `matplotlib`
+-   `molmass`
 -   `seaborn`
 -   `sklearn`
 -   `tensorflow`
