@@ -66,7 +66,7 @@ outlier=False
 # -----------------------------
 
 arch=[20,20]
-nnmodelEsG=NeuralNetwork(NoxideE,arch,'gelu','linear')
+nnmodelEsG=NeuralNetwork(dbE.noxide,arch,'gelu','linear')
 nnmodelEsG.ArchName(arch)
 nnmodelEsG.compile(1.e-4)
 nnmodelEsG.info()
