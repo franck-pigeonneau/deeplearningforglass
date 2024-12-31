@@ -141,13 +141,11 @@ class NeuralNetwork():
         plt.figure()
         plt.semilogy(epochs, train_loss, 'k', label='Training loss')
         plt.semilogy(epochs, valid_loss, 'b', label='Validation loss')
-        plt.title('Training and validation loss')
         plt.legend()
-        plt.grid()
-        plt.xlabel('Epochs')
-        plt.ylabel('Loss')
+        plt.xlabel('Epoch')
+        plt.ylabel('MSE')
         if (savefig):
-            plt.savefig(outputfile)
+            plt.savefig(outputfile,dpi=300,bbox_inches='tight')
         #endif
         plt.show()
     # end plot

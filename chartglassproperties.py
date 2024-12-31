@@ -138,8 +138,8 @@ Nglass=10000
 # Average composition of the glass family
 # ---------------------------------------
 xmol0=np.zeros(dbE.noxide)
-xmol0[iSiO2]=0.7
-xmol0[iNa2O]=0.1
+xmol0[iSiO2]=0.6
+xmol0[iNa2O]=0.15
 xmol0[iCaO]=0.1
 
 # Variation of molar fraction of the remaining oxides

@@ -23,7 +23,7 @@ from glassdata import GlassData
 from network import NeuralNetwork
 
 # Name of the database of glass
-filedatabase='DataBase/Tsoft20oxides.csv'
+filedatabase='DataBase/Tannealing20oxides.csv'
 db=GlassData(filedatabase)
 db.info()
 db.bounds()
@@ -40,10 +40,10 @@ y_train, y_val = db.y[db.x_train:db.x_valid],db.y[db.x_valid:db.x_test]
 # Parameters
 # ----------
 
-reload=True
+reload=False
 Nfold=0
-Nepoch=5000
-batchsize=256
+Nepoch=2000
+batchsize=1024
 errormax=0.1
 PATH='/home/fpigeonneau/ownCloud/Figures/MachineLearning/'
 savefig=False
@@ -63,7 +63,7 @@ nnmodel.info()
 # Training of the model
 # ---------------------
 
-modelfile='Models/nn'+db.nameproperty+nnmodel.namearch+'.h5'
+modelfile='Models/nn'+db.nameproperty+nnmodel.namearch+'ini.h5'
 if (os.path.isfile(modelfile) and reload):
     nnmodel.load(modelfile)
 #end if
@@ -112,7 +112,7 @@ else:
     # Plot training data
     # ------------------
     
-    nnmodel.plot(lossfig,False)
+    nnmodel.plot(lossfig,True)
    
     # Saving of the model
     # -------------------

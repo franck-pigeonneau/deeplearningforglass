@@ -41,7 +41,7 @@ for i in range(dbE.nsample):
     G[i]=np.sum(datadisso['G'].values*dbE.x[i,:])
 #end for
 
-# Determination of E*Vmol/G unité SI
+# Determination of E/(2G) dimensionless quantity
 dbE.y=dbE.y/(2.*G)
 
 # Determination of the Neural network model
@@ -54,8 +54,8 @@ dbE.split(0.6,0.2)
 reload=True
 Nfold=0
 Nepoch=5000
-batchsize=1024
-savefig=False
+batchsize=1500
+savefig=True
 PATH='/home/fpigeonneau/ownCloud/Figures/MachineLearning/'
 errorVt=0.2
 Cleaning=False
@@ -81,7 +81,7 @@ if (os.path.isfile(modelfile) and reload):
 # #end if
 
 tstart=time.time()
-lossfile=PATH+'lossEsG'+namearch+'.pdf'
+lossfile=PATH+'lossEsG'+nnmodelEsG.namearch+'.pdf'
 
 if (Nfold>0):
     # Training by cross validation
@@ -116,8 +116,8 @@ if (Nfold>0):
         # ----------------------
         ifold+=1
     # end for
-else:    
-
+else:
+    
     # Determination of the training and validation sets
     x_train, x_val = dbE.x[dbE.x_train:dbE.x_valid],dbE.x[dbE.x_valid:dbE.x_test]
     y_train, y_val = dbE.y[dbE.x_train:dbE.x_valid],dbE.y[dbE.x_valid:dbE.x_test]
@@ -184,7 +184,7 @@ plt.xlim((ymin*1e0,ymax*1e0))
 plt.ylim((ymin*1e0,ymax*1e0))
 plt.title(r'$R^2$='+str(np.round(r2_train,decimals=3)),fontsize=12)
 if (savefig):
-    plt.savefig(PATH+'/predictedvsactualEsG'+namearch+'-train.pdf',dpi=300,bbox_inches='tight')
+    plt.savefig(PATH+'/predictedvsactualEsG'+nnmodelEsG.namearch+'-train.png',dpi=300,bbox_inches='tight')
 #endif
 
 plt.figure()
@@ -198,7 +198,7 @@ plt.xlim((ymin*1e0,ymax*1e0))
 plt.ylim((ymin*1e0,ymax*1e0))
 plt.title(r'$R^2$='+str(np.round(r2_val,decimals=3)),fontsize=12)
 if (savefig):
-    plt.savefig(PATH+'predictedvsactualEsG'+namearch+'-val.pdf',dpi=300,bbox_inches='tight')
+    plt.savefig(PATH+'predictedvsactualEsG'+nnmodelEsG.namearch+'-val.png',dpi=300,bbox_inches='tight')
 #endif
 
 plt.figure()
@@ -212,7 +212,7 @@ plt.xlim((ymin*1e0,ymax*1e0))
 plt.ylim((ymin*1e0,ymax*1e0))
 plt.title(r'$R^2$='+str(np.round(r2_test,decimals=3)),fontsize=12)
 if (savefig):
-    plt.savefig(PATH+'/predictedvsactualEsG'+namearch+'-test.pdf',dpi=300,bbox_inches='tight')
+    plt.savefig(PATH+'/predictedvsactualEsG'+nnmodelEsG.namearch+'-test.png',dpi=300,bbox_inches='tight')
 #endif
 plt.show()
 
@@ -253,3 +253,12 @@ if (outlier):
     # Saving and remove of the worst data
     dbE.savedata(filedbE,itodrop)
 #end if
+
+# Molar volume nonormalized
+dbE.y=dbE.physicaly(dbE.y)
+
+# Back to E in GPa
+dbE.y=2.*dbE.y*G
+
+# Saving and remove of the worst data
+dbE.savedata(filedbE)

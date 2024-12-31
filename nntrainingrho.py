@@ -45,8 +45,8 @@ y_train,y_val=dbrho.y[dbrho.x_train:dbrho.x_valid],\
 # Execution parameters
 # --------------------
 
-reload=True
-nbepoch=5000
+reload=False
+nbepoch=2000
 arch=[20,20,20]
 batchsize=1024
 errormolarvol=0.2
@@ -67,7 +67,7 @@ nnmodel.info()
 
 # Training of the model
 # ---------------------
-modelfile='Models/nnmolarvol'+nnmodel.namearch+'.h5'
+modelfile='Models/nnmolarvol'+nnmodel.namearch+'ini.h5'
 
 if (os.path.isfile(modelfile) and reload):
     nnmodel.load(modelfile)

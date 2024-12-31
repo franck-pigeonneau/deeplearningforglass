@@ -132,27 +132,27 @@ nnTmelt.info()
 # Data-set on Tliq and ANN model
 # ------------------------------
 
-filedbTliq='DataBase/Tliqclean.csv'
-dbTliq=GlassData(filedbTliq)
-dbTliq.info()
-dbTliq.bounds()
-dbTliq.normalize_y()
+# filedbTliq='DataBase/Tliqclean.csv'
+# dbTliq=GlassData(filedbTliq)
+# dbTliq.info()
+# dbTliq.bounds()
+# dbTliq.normalize_y()
 
 # ANN model on Tliq
 # -----------------
-arch=[32,32,32,32]
-nnTliq=NeuralNetwork(dbTliq.noxide,arch,'gelu','linear')
-nnTliq.compile(3.e-4)
-nnTliq.ArchName(arch)
-modelfile='Models/nn'+dbTliq.nameproperty+nnTliq.namearch+'.h5'
-nnTliq.load(modelfile)
-nnTliq.info()
+# arch=[32,32,32,32]
+# nnTliq=NeuralNetwork(dbTliq.noxide,arch,'gelu','linear')
+# nnTliq.compile(3.e-4)
+# nnTliq.ArchName(arch)
+# modelfile='Models/nn'+dbTliq.nameproperty+nnTliq.namearch+'.h5'
+# nnTliq.load(modelfile)
+# nnTliq.info()
 
 # ------------------------------------------
 # Determination of the bounds for each oxide
 # ------------------------------------------
 
-xmaxt=np.array([dbrho.xmax,dbE.xmax,dbTannealing.xmax,np.append(dbTmelt.xmax,1.),dbTliq.xmax])
+xmaxt=np.array([dbrho.xmax,dbE.xmax,dbTannealing.xmax,np.append(dbTmelt.xmax,1.)])
 xmax=np.zeros(dbrho.noxide)
 for i in range(dbrho.noxide):
     xmax[i]=np.min(xmaxt[:,i])
