@@ -33,9 +33,8 @@ Artificial Neural Networks have been fitted using datasets extracted from Interg
 V8 and SciGlass databases. The details of the development of the models can be found 
 in the article:
 
-F. Pigeonneau, M. Rondet, O. de Lataulade and E. Hachem (2024). *Physical-informed deep learning prediction of solid and fluid mechanical properties of oxide glasses* 
-J. Non-Cryst. Solids, under review, <http://dx.doi.org/10.2139/ssrn.4997217>.
-
+F. Pigeonneau, M. Rondet, O. de Lataulade and E. Hachem (2025). *Physical-informed deep learning prediction of solid and fluid mechanical properties of oxide glasses* 
+J. Non-Cryst. Solids, 657:123476, <http://dx.doi.org/10.1016/j.jnoncrysol.2025.123476>.
 
 <a id="org855f345"></a>
 
