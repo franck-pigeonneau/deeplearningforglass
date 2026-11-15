@@ -71,8 +71,7 @@ Under this repository, various files are provided. The list is the following:
 
 ## `dissociationenergy.csv`
 
-The `dissociationenergy.csv` gathers for the twenty oxides the dissociation energy, second column,
-in GPa and the packing volume in cm<sup>3</sup>/mol. This `csv` file is used in the determination of the packing
+The `dissociationenergy.csv` gathers for the twenty oxides the cation number, the dissociation energy in GPa, the packing volume in cm<sup>3</sup>/mol, the coordination number, dissociation energy and bond strength between the cation and O. This `csv` file is used in the determination of the packing
 atomic factor to compute the Young's modulus.
 
 
