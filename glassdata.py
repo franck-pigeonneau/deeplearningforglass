@@ -455,7 +455,7 @@ class GlassData():
             oxideproportion=np.size(np.argwhere(self.x[:,i]!=0.))/np.size(self.y)
             if (oxideproportion<minoxidefraction):
                 listoxide=np.append(listoxide,i)
-                print('Oxide ',oxide[i],' is removed of the composition.')
+                print('Oxide ',self.oxide[i],' is removed of the composition.')
             #end if
         #end for
         listoxide=np.int64(listoxide)
@@ -472,7 +472,7 @@ class GlassData():
         
         # Data filtering to keep the most representatif data of oxides
         if (filteringoxide):
-            for i in range(np.size(oxide)):
+            for i in range(np.size(self.oxide)):
                 self.FilteringOxide(probamin,probamax,i,Plot)
             #end for
         #end if
@@ -543,7 +543,7 @@ class GlassData():
     def FilteringProperty(self,probamin,probamax,Plot):
         """
         Cleaning of database by keeping glass samples for which the probability of
-        occurrence is in tha range [probamin,probamax].
+        occurrence is in the range [probamin,probamax].
         
         Parameters
         ----------
@@ -744,7 +744,7 @@ class GlassData():
     
         if (Plot):
             listarg=np.argwhere(xoxidenew[:,ioxide]!=0.)
-            nozerovalue=xoxide[listarg,ioxide]
+            nozerovalue=self.xoxide[listarg,ioxide]
             minxoxide=np.min(nozerovalue)
             maxxoxide=np.max(nozerovalue)
             Nbins=int(np.sqrt(np.size(nozerovalue)))
@@ -1009,7 +1009,7 @@ class GlassData():
         Returns
         -------
         Array of N floats
-        Young's modulus.
+        Young's modulus in GPa.
         """
         # Size of the data-set
         # --------------------
@@ -1031,5 +1031,133 @@ class GlassData():
         # -------------------------------------------
         return 2.*VtVm*G
     #end YoungModulus
+    
+    # ---------------
+    # Poisson's ratio
+    # ---------------
+    
+    def PoissonRatio(self,dbE,nnmodelVt,nnmodelalpha,oxide,x):
+        """
+        Determination of the Poisson's ratio as a function of a composition of
+        glass with the list of oxide and molar composition x.
 
+        Parameters
+        ----------
+        dbE : Data-base on the Young's modulus
+        nnmodelVt : Neural-network model to predict Vt
+        nnmodelalpha : Neural-network model to predict alpha
+        oxide : Array of strings
+            Names of oxides.
+        x : Array of two dimensions (N,Noxide)
+            molar fraction of glass composition.
+
+        Returns
+        -------
+        Array of N floats
+            Poisson's ratio.
+        """
+    
+        # Determination of the atomic packing factor
+        # ------------------------------------------
+        xdb=dbE.xglasstoxdb(oxide,x)
+        Vt=dbE.physicaly(nnmodelVt.model.predict(xdb).transpose()[0,:])
+
+        # Determination of alpha
+        # ----------------------
+        xdb=self.xglasstoxdb(oxide,x)
+        alpha=self.physicaly(nnmodelalpha.model.predict(xdb).transpose()[0,:])
+        
+        # Determination of E and return of the result
+        # -------------------------------------------
+        return 0.5-1./(6.*alpha*Vt)
+    #end PoissonRatio
+
+    # ----------------    
+    # Vickers hardness
+    # ----------------
+    
+    def Vickers(self,datadisso,dbE,nnmodelVt,E,nu,oxide,x):
+        """
+        Computation of the Vickers hardness according to the Yamane-Mackenzie
+        model. Coordination number, bond strength and energy of dissociation are
+        gathered in the data-file dissociationenergy.csv.
+
+        Parameters
+        ----------
+        datadisso : dataframe
+        Data gathered the dissosiation energy of oxides.
+        dbE : Data-base on the Young's modulus.
+        E : Array of floats
+            Young modulus.
+        nu : Array of floats
+            Poisson coefficient.
+        oxide : Array of strings
+            Names of oxides.
+        x : Array of two dimensions (N,Noxide)
+            molar fraction of glass composition.
+
+        Returns
+        -------
+        HV : Array of N floats
+            Vickers hardness in GPa.
+        """
+        
+        xdb=dbE.xglasstoxdb(oxide,x)
+        
+        Vt=dbE.physicaly(nnmodelVt.model.predict(xdb).transpose()[0,:])
+        
+        ncation=datadisso['ncation'].values
+        CN=datadisso['CN'].values
+        BondStrength=datadisso['BondStrength'].values
+        
+        # Index of SiO2 in oxide
+        iSiO2=np.argwhere(self.oxide=='SiO2')[0][0]
+        
+        # Determination of alpha
+        Nglass=np.size(x,0)
+        alphaHV=np.zeros(Nglass)
+        for i in range(Nglass):
+            sum1=0.
+            sum2=0.
+            for j in range(self.noxide):
+                sum1+=ncation[j]*xdb[i,j]*CN[j]*BondStrength[j]
+                sum2+=ncation[j]*xdb[i,j]*CN[j]
+            #end for
+            alphaHV[i]=sum1/(BondStrength[iSiO2]*sum2)
+        #end for
+        
+        print('alphaHV=',alphaHV)
+        
+        # Determination of HV
+        #HV=0.051*E*np.sqrt(alphaHV/(0.462+0.09*Vt-Vt**2))
+        HV=0.07756717518813398*E*np.sqrt(alphaHV/(1.-nu-2.*nu**2))
+        
+        # Return of the result
+        return HV
+    #end Vickers
+
+    def fragility(self,Tg,B,T0):
+        """
+        Determination of the fragility from the VFT law.
+
+        Parameters
+        ----------
+        Tg : Float
+            Glass transition temperature in K.
+        B : Float
+            Coefficient of the VFT law.
+        T0 : Float
+            Temperature in the VFT law.
+
+        Returns
+        -------
+        Float
+        
+        Fragility without dimension.
+        
+        """
+        return B*Tg/(Tg-T0)**2
+    # end fragility
+    
+        
 #end class GlassData
