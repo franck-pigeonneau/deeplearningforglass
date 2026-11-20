@@ -42,6 +42,7 @@ J. Non-Cryst. Solids, 657:123476, <http://dx.doi.org/10.1016/j.jnoncrysol.2025.1
 
 Python modules involved in this module are:
 
+-   `molmass`
 -   `numpy`
 -   `pandas`
 -   `matplotlib`
@@ -284,17 +285,5 @@ The list of data sets are the following:
 
 # Trained ANN models
 
-Models of artifial neural networks used to predict properties has been previously 
-trained. They are under the directory `Models`.
-
--   `nnEsG3c20.h5`: ANN of 3 layers of 20 neurals determined the atomic packing factor from the
-    Young's data set `E20oxides.csv`.
--   `nnmolarvol3c20.h5`: ANN of 3 layers of 20 neurals determined the molar volume from the density data set
-    `rho20oxides.csv`.
--   `nnTannealing3c20h5`: ANN of 3 layers of 20 neurals determined the annealing temperature corresponding
-    to the glass transition temperature from the data set `Tannealing20oxides.csv`.
--   `nnTmelt3c20.h5`: ANN of 3 layers of 20 neurals determined the melting temperature
-    from the data set `Tmelt20oxides.csv`.
--   `nnTsoft3c20.h5`: ANN of 3 layers of 20 neurals determined the softening temperature
-    from the data set `Tsoft20oxides.csv`.
+Models of artifial neural networks used to predict properties has been previously trained. They are under the directory \texttt{Models}. The name of model is defined using the name of the fitted property and the architecture of the neural network. For instance, for the Young modulus, E, with 3 hidden layers with both 20 neurals, the name is `nnEsG3c20.h5` or `nnEsG3c20.keras`. For the molar volume with one layer of 32, one layer of 16 and the last one with 8 neurals, the name is `nnmolarvol3c32168.h5` or `nnmolarvol3c32168.keras`. Various examples of pre-trained models has gathered in the directory `Models`.
 
