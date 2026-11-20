@@ -12,16 +12,16 @@ Definition of a class network to create a neutral network.
 # ---------------
 
 import os
-import numpy             as np
+import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 import sys
 import tensorflow as tf
 
 # Keras-specific imports
-from keras.models       import Sequential
-from keras.optimizers   import Adam
-from keras.layers       import Input,Dense
-from keras.initializers import Orthogonal
+from keras.models import Sequential
+from keras.optimizers import Adam
+from keras.layers import Input,Dense
 
 # =============
 # Network class
@@ -49,14 +49,13 @@ class NeuralNetwork():
     compile(self, lr=1.0e-3): Compile model.
     info(self): Print infos about model.
     fit(self,x_train,y_train,x_val,y_val,epochs,batch_size): Fitting model on data.
-    plot(self,outputfile='loss.png',savefig=False): Plot accuracy and loss.
+    plot(self,csvfile='loss.csv',outputfile='loss.png',savefig=False): Plot accuracy and loss.
     save(self, filename): Save model to file
     load(self,filename): Load model from file
     ArchName(self,arch): Name summarizing the architecture of the model.
 
     """
 
-    
     # -----------------------
     # Initialisation function
     # -----------------------
@@ -127,34 +126,41 @@ class NeuralNetwork():
     # Plot accuracy and loss
     # ----------------------
     
-    def plot(self,outputfile='loss.png',savefig=False):
+    def plot(self,csvfile='loss.csv',figname='loss.png',savefig=False):
         if (self.history is None):
             print('**************')
             print('Error in network.plot()')
             print('Training history is empty')
             sys.exit()
         #end if
+        
         train_loss = self.history.history['loss']
         valid_loss = self.history.history['val_loss']
         epochs     = range(len(train_loss))
-        np.savetxt('loss.dat', np.transpose([epochs,train_loss,valid_loss]))
+        
+        # Plotting of losses vs epochs
         plt.figure()
-        plt.semilogy(epochs, train_loss, 'k', label='Training loss')
-        plt.semilogy(epochs, valid_loss, 'b', label='Validation loss')
+        plt.semilogy(epochs,train_loss,'k', label='Training loss')
+        plt.semilogy(epochs,valid_loss,'b', label='Validation loss')
         plt.legend()
         plt.xlabel('Epoch')
         plt.ylabel('MSE')
         if (savefig):
-            plt.savefig(outputfile,dpi=300,bbox_inches='tight')
+            plt.savefig(figname,dpi=300,bbox_inches='tight')
         #endif
-        plt.show()
+        
+        # Saving of losses vs epoch in csv file
+        A=np.transpose(np.array([epochs,train_loss,valid_loss]))
+        data=pd.DataFrame(A,columns=np.array(['epoch','train_loss','valid_loss']))
+        data.to_csv(csvfile)
     # end plot
     
     # ------------------
     # Save model to file
     # ------------------
     
-    def save(self, filename):
+    def save(self,filename):
+        filename+='.keras'
         self.model.save(filename)
     # end save
     
@@ -162,13 +168,21 @@ class NeuralNetwork():
     # Load model from file
     # --------------------
     
-    def load(self,filename):
-        if (not os.path.isfile(filename)):
-            print('Could not find model file')
-            sys.exit()
+    def load(self,filename,reload=False):
+        filenameext=filename+'.keras'
+        if (os.path.isfile(filenameext) and reload):
+            # Loading of the file .keras
+            self.model=tf.keras.models.load_model(filenameext)
+        else:
+            filenameext=filename+'.h5'
+            if (os.path.isfile(filenameext) and reload):
+                # Loading of the file .h5
+                self.model=tf.keras.models.load_model(filenameext)
+            else:
+                print('Could not find model file .keras or .h5')
+                sys.exit()
+            #endif
         #end if
-        #self.model=self.model.load_model(filename,compile=True)
-        self.model=tf.keras.models.load_model(filename)
     # end load
 
     # --------

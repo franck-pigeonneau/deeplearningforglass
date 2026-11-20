@@ -54,7 +54,7 @@ dbE.split(0.6,0.2)
 reload=True
 Nfold=0
 Nepoch=5000
-batchsize=1500
+batchsize=2048
 savefig=True
 PATH='/home/fpigeonneau/ownCloud/Figures/MachineLearning/'
 errorVt=0.2
@@ -68,17 +68,15 @@ outlier=False
 arch=[20,20]
 nnmodelEsG=NeuralNetwork(dbE.noxide,arch,'gelu','linear')
 nnmodelEsG.ArchName(arch)
-nnmodelEsG.compile(1.e-4)
+nnmodelEsG.compile(3.e-4)
 nnmodelEsG.info()
 
 # ---------------------
 # Training of the model
 # ---------------------
 
-modelfile='Models/nnEsG'+nnmodelEsG.namearch+'.h5'
-if (os.path.isfile(modelfile) and reload):
-    nnmodelEsG.load(modelfile)
-# #end if
+modelfile='Models/nnEsG'+nnmodelEsG.namearch
+nnmodelEsG.load(modelfile,reload)
 
 tstart=time.time()
 lossfile=PATH+'lossEsG'+nnmodelEsG.namearch+'.pdf'
@@ -112,7 +110,7 @@ if (Nfold>0):
         
         nnmodelEsG.save(modelfile[:,-3]+str(ifold)+'.h5')
         
-        # Incrementaion of ifold
+        # Incrementation of ifold
         # ----------------------
         ifold+=1
     # end for
@@ -253,12 +251,3 @@ if (outlier):
     # Saving and remove of the worst data
     dbE.savedata(filedbE,itodrop)
 #end if
-
-# Molar volume nonormalized
-dbE.y=dbE.physicaly(dbE.y)
-
-# Back to E in GPa
-dbE.y=2.*dbE.y*G
-
-# Saving and remove of the worst data
-dbE.savedata(filedbE)

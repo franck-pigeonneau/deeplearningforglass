@@ -45,9 +45,9 @@ y_train,y_val=dbrho.y[dbrho.x_train:dbrho.x_valid],\
 # Execution parameters
 # --------------------
 
-reload=False
-nbepoch=2000
-arch=[20,20,20]
+reload=True
+nbepoch=5000
+arch=[128,64,32,16,8]
 batchsize=1024
 errormolarvol=0.2
 savefig=False
@@ -67,18 +67,15 @@ nnmodel.info()
 
 # Training of the model
 # ---------------------
-modelfile='Models/nnmolarvol'+nnmodel.namearch+'ini.h5'
-
-if (os.path.isfile(modelfile) and reload):
-    nnmodel.load(modelfile)
-#end if
-
+modelfile='Models/nnmolarvol'+nnmodel.namearch
+nnmodel.load(modelfile,reload)
 nnmodel.fit(x_train,y_train,x_val,y_val,epochs=nbepoch,batch_size=batchsize)
 
 # Plot training data
 # ------------------
+lossdata='Losses/nnmolarvol'+nnmodel.namearch+'.csv'
 lossfig=PATH+'lossmolarvol'+nnmodel.namearch+'.pdf'
-nnmodel.plot(lossfig,True)
+nnmodel.plot(lossdata,lossfig,True)
 
 # Saving of the model
 # -------------------
@@ -129,7 +126,7 @@ plt.xlim((1.e6*ymin,1.e6*ymax))
 plt.ylim((1.e6*ymin,1.e6*ymax))
 plt.title(r'Training, $R^2$='+str(np.round(r2_train,decimals=3)),fontsize=12)
 if (savefig):
-    plt.savefig(PATH+'predictedvsactualmolarvol'+namearch+'-train.pdf',dpi=300,bbox_inches='tight')
+    plt.savefig(PATH+'predictedvsactualmolarvol'+nnmodel.namearch+'-train.pdf',dpi=300,bbox_inches='tight')
 #endif
 
 plt.figure()
@@ -143,7 +140,7 @@ plt.xlim((1.e6*ymin,1.e6*ymax))
 plt.ylim((1.e6*ymin,1.e6*ymax))
 plt.title(r'Validation, $R^2$='+str(np.round(r2_val,decimals=3)),fontsize=12)
 if (savefig):
-    plt.savefig(PATH+'predictedvsactualmolarvol'+namearch+'-val.pdf',dpi=300,bbox_inches='tight')
+    plt.savefig(PATH+'predictedvsactualmolarvol'+nnmodel.namearch+'-val.pdf',dpi=300,bbox_inches='tight')
 #endif
 
 plt.figure()
@@ -157,7 +154,7 @@ plt.xlim((1.e6*ymin,1.e6*ymax))
 plt.ylim((1.e6*ymin,1.e6*ymax))
 plt.title(r'Test, $R^2$='+str(np.round(r2_test,decimals=3)),fontsize=12)
 if (savefig):
-    plt.savefig(PATH+'predictedvsactualmolarvol'+namearch+'-test.pdf',dpi=300,bbox_inches='tight')
+    plt.savefig(PATH+'predictedvsactualmolarvol'+nnmodel.namearch+'-test.pdf',dpi=300,bbox_inches='tight')
 #endif
 
 plt.show()
