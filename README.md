@@ -25,6 +25,7 @@ This python module has been developed to determine the following glass propertie
 
 -   density,
 -   Young's modulus,
+-   Poisson's ratio,
 -   melting temperature,
 -   softening temperature,
 -   glass transition temperature (assuming equivalent to the annealing temperature).
