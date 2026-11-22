@@ -52,6 +52,12 @@ Python modules involved in this module are:
 -   `sklearn`
 -   `tensorflow`
 
+The list is given in `Requirements.txt`. To charge the module, use the shell command:
+
+```bash
+    python3 pip install -r Requirements.txt
+```
+
 <a id="org044d1eb"></a>
 
 # Repository constitution
