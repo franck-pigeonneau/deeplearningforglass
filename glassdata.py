@@ -1159,5 +1159,4 @@ class GlassData():
         return B*Tg/(Tg-T0)**2
     # end fragility
     
-        
 #end class GlassData
