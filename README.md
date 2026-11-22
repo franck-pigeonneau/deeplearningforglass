@@ -29,9 +29,7 @@ This python module has been developed to determine the following glass propertie
 -   softening temperature,
 -   glass transition temperature (assuming equivalent to the annealing temperature).
 
-Artificial Neural Networks have been fitted using datasets extracted from Interglad
-V8 and SciGlass databases. The details of the development of the models can be found 
-in the article:
+Artificial Neural Networks have been fitted using datasets extracted from Interglad V8 and SciGlass databases. The details of the development of the models can be found in the article:
 
 F. Pigeonneau, M. Rondet, O. de Lataulade and E. Hachem (2025). *Physical-informed deep learning prediction of solid and fluid mechanical properties of oxide glasses* 
 J. Non-Cryst. Solids, 657:123476, <http://dx.doi.org/10.1016/j.jnoncrysol.2025.123476>.
