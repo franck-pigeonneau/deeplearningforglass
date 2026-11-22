@@ -162,7 +162,7 @@ The methods associated to this are:
 
 This file compiles various functions useful in glass and melting sciences.
 
--   `muVFT(T,Amu,Bmu,Tmu)`: Determination of the dynamic viscosity of glass forming liquid using VFT's law given by
+-   `muVFT(T,Amu,Bmu,Tmu)`: Determination of the dynamic viscosity in Pa$`\cdot`$s of glass forming liquid using VFT's law given by
     
     $`\mu=A_\mu\exp\left(\frac{B_\mu}{T-T_\mu}\right).`$
 
@@ -170,7 +170,7 @@ This file compiles various functions useful in glass and melting sciences.
     
     $`L=A\exp\left(\frac{B}{T}\right).`$
     
-    The unit of \(L\) is mol/(m<sup>3</sup> Pa^&beta;) with beta the exponent in pressure depenence:
+    The unit of $`L`$ is mol/(m<sup>3</sup> Pa^&beta;) with beta the exponent in pressure dependence:
     
     $`C=LP^\beta.`$
 
@@ -178,23 +178,23 @@ This file compiles various functions useful in glass and melting sciences.
     
     $`D=A\exp\left(-\frac{B}{T}\right).`$
     
-    The unit of \(D\) is m<sup>2</sup>/s.
+    The unit of $`D`$ is m<sup>2</sup>/s.
 
 -   `Kequi(A,B,T)`: Computation of the equilibrium constant of a chemical reaction of oxidation-reduction in glass forming liquid.
 
--   `VFTcoefficients(Tm,Ts,Tg)`: This function determines the three coefficients, \(A\), \(B\) and \(T_0\) of the VFT's law
+-   `VFTcoefficients(Tm,Ts,Tg)`: This function determines the three coefficients, $`A`$, $`B`$ and $`T_0`$ of the VFT's law
     
     $`\log(\eta)=A+\frac{B}{T-T_0}.`$
     
-    The temperatures are given in Celsius or in Kelvin. The coefficient \(A\) is determined to have the viscosity in Pa.s.
+    The temperatures are given in Celsius or in Kelvin. The coefficient $`A`$ is determined to have the viscosity in Pa.s.
 
 -   `Tsoft(Amu,Bmu,Tmu)`: Computation of the Littletown temperature based on the VFT's law of a glass forming liquid given by
     
-    $`\mu=A_\mu\exp\left(\frac{B_\mu}{T-T_\mu}\right).`$
+    $`T_s=T_\mu+\frac{B_\mu}{\ln\left(\frac{10^{6.65}}{A_\mu}\right)}.`$
 
 -   `Tglass(Amu,Bmu,Tmu)`: Computation of the glass transition temperature based on the VFT's law of a glass forming liquid given by
     
-    $`\mu=A_\mu\exp\left(\frac{B_\mu}{T-T_\mu}\right).`$
+    $`T_g=T_\mu+\frac{B_\mu}{\ln\left(\frac{10^{12}}{A_\mu}\right)}.`$
 
 -   `MolarMass(name)`: Molar mass of a chemical molecule given by name in kg/mol.
 
