@@ -12,10 +12,9 @@
     6.  [`nntrainingrho.py`](#orgc72b161)
     7.  [`nntrainingE.py`](#orgaf5c3ac)
     8.  [`chartglassproperties.py`](#org3aa392d)
+    9.  [`requirements.txt`]
 4.  [Data sets](#org1ad49b3)
 5.  [Trained ANN models](#orge3e232c)
-
-
 
 <a id="org0b0a9f4"></a>
 
@@ -52,10 +51,10 @@ Python modules involved in this module are:
 -   `sklearn`
 -   `tensorflow`
 
-The list is given in `Requirements.txt`. To charge the module, use the shell command:
+The list is given in `requirements.txt`. To charge the module, use the shell command:
 
 ```bash
-    python3 pip install -r Requirements.txt
+    python3 pip install -r requirements.txt
 ```
 
 <a id="org044d1eb"></a>
