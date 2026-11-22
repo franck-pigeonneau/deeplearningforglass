@@ -162,7 +162,7 @@ This file compiles various functions useful in glass and melting sciences.
 
 -   `muVFT(T,Amu,Bmu,Tmu)`: Determination of the dynamic viscosity of glass forming liquid using VFT's law given by
     
-    \[\mu=A_\mu\exp\left(\frac{B_\mu}{T-T_\mu}\right).\]
+    $`\mu=A_\mu\exp\left(\frac{B_\mu}{T-T_\mu}\right).`$
 
 -   `Henry(A,B,T)`: Solubility of gas in a glass forming liquid from the Henry's law given by
     
