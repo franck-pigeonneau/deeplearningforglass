@@ -52,7 +52,6 @@ Python modules involved in this module are:
 -   `sklearn`
 -   `tensorflow`
 
-
 <a id="org044d1eb"></a>
 
 # Repository constitution
@@ -85,34 +84,20 @@ atomic factor to compute the Young's modulus.
 clean datasets and manages data for the training stage. It is composed by the
 following variables
 
--   `oxide`: Array of string
-    Names of the oxides of the glass composition.
--   `nameproperty`: String
-    Name of the property of the glasses.
--   `nsample`: Integer
-    Number of the glass.
--   `noxide`: Integer
-    Number of oxides constituting the glass composition.
--   `nbO`: Array of integer of the noxide oxides
-    number of oxygen in each oxide.
--   `cation`: Array of string of the noxide oxides
-    name of the cation in each oxide.
--   `nbcation`: Array of integer of the noxide oxides
-    number of cation in each oxide.
--   `Moxide`: Array of float of the noxide oxides
-    molar mass of each oxide.
--   `x`: Array of float (nsample,noxide)
-    Molar fraction of the noxide oxides of the nsample glass composition.
--   `y`: Array of float of the nsample glass composition.
-    Property of glass of the data set.
--   `xmin`: Array of float of the noxide oxides
-    Minimum of the molar fraction of each oxide (=0)
--   `xmax`: Array of float of the noxide oxides
-    Maximum of the molar fraction of each oxide in the data set.
--   `occurence`: Array of integer
-    Numbers of composition for which the molar fraction of each oxide is stricly different to zero.
--   `MolarM`: Array of float of  the nsample glass composition.
-    Molar mass of each glass composition in kg/mol.
+-   `oxide`: Array of string. Names of the oxides of the glass composition.
+-   `nameproperty`: String. Name of the property of the glasses.
+-   `nsample`: Integer. Number of the glass.
+-   `noxide`: Integer. Number of oxides constituting the glass composition.
+-   `nbO`: Array of integer of the noxide oxides number of oxygen in each oxide.
+-   `cation`: Array of string of the noxide oxides name of the cation in each oxide.
+-   `nbcation`: Array of integer of the noxide oxides number of cation in each oxide.
+-   `Moxide`: Array of float of the noxide oxides. Molar mass of each oxide.
+-   `x`: Array of float (nsample,noxide). Molar fraction of the noxide oxides of the nsample glass composition.
+-   `y`: Array of float of the nsample glass composition. Property of glass of the data set.
+-   `xmin`: Array of float of the noxide oxides. Minimum of the molar fraction of each oxide (=0)
+-   `xmax`: Array of float of the noxide oxides. Maximum of the molar fraction of each oxide in the data set.
+-   `occurence`: Array of integer. Numbers of composition for which the molar fraction of each oxide is strictly different to zero.
+-   `MolarM`: Array of float of  the nsample glass composition. Molar mass of each glass composition in kg/mol.
 
 The methods associated to this GlassData class are:
 
@@ -128,45 +113,29 @@ The methods associated to this GlassData class are:
 -   `physicalx(self,x)`: Computational of x from the norlaized values.
 -   `physicaly(self,y)`: Computational of y from the norlaized values.
 -   `savedata(self,filesavedata,listtodrop=None)`: Saving of the data set in a csv file with a removal of a list of samples if it exists.
--   `xglasstoxdb(self,oxide,xglass)`: Copy the array of the glass composition xglass with a list of oxide in the
+-   `xglasstoxdb(self,oxide,xglass)`: Copy the array of the glass composition xglass with a list of oxide in the formatted array of the dataset.
 
-formatted array of the dataset.
+-   `datacleaning(self,filename,xtotal,probamin,probamax,xminor,minoxidefraction, filteringoxide,Plot)`: Cleaning of the dataset gathered in the filename extracted from Interglad. Here, all unexpected characters and lines are removed. Alphanumeric characters are transformed into float.
 
--   `datacleaning(self,filename,xtotal,probamin,probamax,xminor,minoxidefraction,
-       filteringoxide,Plot)`: Cleaning of the dataset gathered in the filename extracted from Interglad. Here,
+-   `FilteringProperty(self,probamin,probamax,Plot)`: Cleaning of database by keeping glass samples for which the probability of occurrence is in tha range `[probamin,probamax]`.
 
-all unexpected characters and lines are removed. Alphanumeric characters are 
-transformed into float.
-
--   `FilteringProperty(self,probamin,probamax,Plot)`: Cleaning of database by keeping glass samples for which the probability of occurrence
-
-is in tha range `[probamin,probamax]`.
-
--   `FilteringOxide(self,probamin,probamax,ioxide,Plot)`: Cleaning of database by keeping glass samples for which the probability of
-
-occurrence of oxide ioxide is in the range `[probamin,probamax]`.
+-   `FilteringOxide(self,probamin,probamax,ioxide,Plot)`: Cleaning of database by keeping glass samples for which the probability of occurrence of oxide ioxide is in the range `[probamin,probamax]`.
 
 -   `pdfoxide(self,ioxide,density,Plot,filename)`: Determination of the pdf of the oxide[ioxide].
--   `familyrandomcomposition(self,Nglass,I,J,xmol0,dx0)`: Determination of random composition of Nglass composition centered on a composition
-
-constituted of a list I of a sub-set oxides with centered composition xmol0.
-
+-   `familyrandomcomposition(self,Nglass,I,J,xmol0,dx0)`: Determination of random composition of Nglass composition centered on a composition constituted of a list I of a sub-set oxides with centered composition xmol0.
 -   `randomcomposition(self,Nglass,xmax)`: Determination of random composition of Nglass composition.
 -   `GlassDensity(self,nnmodel,oxide,x)`: Determination of the glass density from the molar volume.
--   `YoungModulus(self,nnmodel,datadisso,oxide,x)`: Determination of the Young's modulus as a function of a composition of glass with
-
-the list of oxide and molar composition x.
-
+-   `YoungModulus(self,nnmodel,datadisso,oxide,x)`: Determination of the Young's modulus as a function of a composition of glass with the list of oxide and molar composition x.
+-   `Vickers(self,datadisso,dbE,nnmodelVt,E,nu,oxide,x)`: Computation of the Vicker's hardness according to the Yamane-Mackenzie model. Coordination number, bond strength and energy of dissociation are gathered in the data-file dissociationenergy.csv.
+-   `fragility(self,Tg,B,T0)`: Determination of the fragility from the VFT law.
 
 <a id="org190e660"></a>
 
 ## `network.py`
 
-`network.py` is a class used to define, compile, fit an ANN model. The parameters of
-this class are:
+`network.py` is a class used to define, compile, fit an ANN model. The parameters of this class are:
 
--   `shape`: Integers corresponding of the number of features (= number of oxides) and
-    number of samples in the data-set.
+-   `shape`: Integers corresponding of the number of features (= number of oxides) and number of samples in the data-set.
 -   `arch`: Array defining the number of layers and each associated neurals.
 -   `actv`: Activation function of hidden layers in ANN model.
 -   `final`: Function of the output layer.
@@ -185,15 +154,13 @@ The methods associated to this are:
 -   `load(self,filename)`: Load model from file
 -   `ArchName(self,arch)`: Name summarizing the architecture of the model.
 
-
 <a id="org6089b03"></a>
 
 ## `glassproperties.py`
 
 This file compiles various functions useful in glass and melting sciences.
 
--   `muVFT(T,Amu,Bmu,Tmu)`: Determination of the dynamic viscosity of glass forming liquid using VFT's law given
-    by
+-   `muVFT(T,Amu,Bmu,Tmu)`: Determination of the dynamic viscosity of glass forming liquid using VFT's law given by
     
     \[\mu=A_\mu\exp\left(\frac{B_\mu}{T-T_\mu}\right).\]
 
@@ -211,38 +178,29 @@ This file compiles various functions useful in glass and melting sciences.
     
     The unit of \(D\) is m<sup>2</sup>/s.
 
--   `Kequi(A,B,T)`: Computation of the equilibrium constant of a chemical reaction of 
-    oxidation-reduction in glass forming liquid.
+-   `Kequi(A,B,T)`: Computation of the equilibrium constant of a chemical reaction of oxidation-reduction in glass forming liquid.
 
 -   `VFTcoefficients(Tm,Ts,Tg)`: This function determines the three coefficients, \(A\), \(B\) and \(T_0\) of the VFT's law
     
     \[\log(\eta)=A+\frac{B}{T-T_0}.\]
     
-    The temperatures are given in Celsius or in Kelvin. The coefficient \(A\) is 
-    determined to have the viscosity in Pa.s.
+    The temperatures are given in Celsius or in Kelvin. The coefficient \(A\) is determined to have the viscosity in Pa.s.
 
--   `Tsoft(Amu,Bmu,Tmu)`: Computation of the Littletown temperature based on the VFT's law of a
-    glass forming liquid given by
+-   `Tsoft(Amu,Bmu,Tmu)`: Computation of the Littletown temperature based on the VFT's law of a glass forming liquid given by
     
     \[\mu=A_\mu\exp\left(\frac{B_\mu}{T-T_\mu}\right).\]
 
--   `Tglass(Amu,Bmu,Tmu)`: Computation of the glass transition temperature based on the VFT's law of a
-    glass forming liquid given by
+-   `Tglass(Amu,Bmu,Tmu)`: Computation of the glass transition temperature based on the VFT's law of a glass forming liquid given by
     
     \[\mu=A_\mu\exp\left(\frac{B_\mu}{T-T_\mu}\right).\]
 
 -   `MolarMass(name)`: Molar mass of a chemical molecule given by name in kg/mol.
 
--   `PoissonRatio(dbE,nnmodelEsG,db,nnmodel,oxide,x)`: Determination of the Poisson's ratio from the Makishima-Mackensie's model.
-
-
 <a id="org1b15c53"></a>
 
 ## `nntrainingproperty.py`
 
-This script is an example achieving the training of an ANN model using our own GlassData and
-NeuralNetwork classes.
-
+This script is an example achieving the training of an ANN model using our own GlassData and NeuralNetwork classes.
 
 <a id="orgc72b161"></a>
 
@@ -250,14 +208,15 @@ NeuralNetwork classes.
 
 Script used to train an ANN model to fit the molar volume obtained for the data-set on density.
 
-
 <a id="orgaf5c3ac"></a>
 
 ## `nntrainingE.py`
 
-Script used to train an ANN model to fit the atomic packing factor obtained for
-the data-set on Young's modulus.
+Script used to train an ANN model to fit the atomic packing factor obtained for the data-set on Young's modulus.
 
+## `nntrainingnu.py`
+
+Script used to train an ANN model to fit the parameter alpha of the Makishima-Mackenzie's model in the theoretical model to determine the Poisson's ratio. This prediction is done using the data-set on Poisson's ratio and the atomic packing factor obtained from the Young's modulus.
 
 <a id="org3aa392d"></a>
 
@@ -265,14 +224,11 @@ the data-set on Young's modulus.
 
 Script used to determine charts of mechanical properties.
 
-
 <a id="org1ad49b3"></a>
 
 # Data sets
 
-Data sets for the various properties are gathered under the directory `Database`.
-
-The list of data sets are the following:
+Data sets for the various properties are gathered under the directory `Database`. The list of data sets are the following:
 
 -   `E20oxides.csv`: File given the Young' modulus in GPa as a function of 20 oxides.
 -   `rho20oxides.csv`: File given the density in kg/m<sup>3</sup> as a function of 20 oxides.
@@ -287,4 +243,3 @@ The list of data sets are the following:
 # Trained ANN models
 
 Models of artifial neural networks used to predict properties has been previously trained. They are under the directory \texttt{Models}. The name of model is defined using the name of the fitted property and the architecture of the neural network. For instance, for the Young modulus, E, with 3 hidden layers with both 20 neurals, the name is `nnEsG3c20.h5` or `nnEsG3c20.keras`. For the molar volume with one layer of 32, one layer of 16 and the last one with 8 neurals, the name is `nnmolarvol3c32168.h5` or `nnmolarvol3c32168.keras`. Various examples of pre-trained models has gathered in the directory `Models`.
-
