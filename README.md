@@ -12,7 +12,7 @@
     6.  [`nntrainingrho.py`](#orgc72b161)
     7.  [`nntrainingE.py`](#orgaf5c3ac)
     8.  [`chartglassproperties.py`](#org3aa392d)
-    9.  [`requirements.txt`]
+    9.  [`requirements.txt`](#org855f345)
 4.  [Data sets](#org1ad49b3)
 5.  [Trained ANN models](#orge3e232c)
 
