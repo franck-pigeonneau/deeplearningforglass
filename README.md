@@ -162,7 +162,7 @@ The methods associated to this are:
 
 This file compiles various functions useful in glass and melting sciences.
 
--   `muVFT(T,Amu,Bmu,Tmu)`: Determination of the dynamic viscosity in Pa$`\cdot`$s of glass forming liquid using VFT's law given by
+-   `muVFT(T,Amu,Bmu,Tmu)`: Determination of the dynamic viscosity in Pa.s of glass forming liquid using VFT's law given by
     
     $`\mu=A_\mu\exp\left(\frac{B_\mu}{T-T_\mu}\right).`$
 
