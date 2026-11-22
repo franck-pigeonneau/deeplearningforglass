@@ -67,7 +67,6 @@ Under this repository, various files are provided. The list is the following:
 -   `nntrainingE.py`
 -   `chartglassproperties.py`
 
-
 <a id="orga1e7754"></a>
 
 ## `dissociationenergy.csv`
@@ -166,15 +165,15 @@ This file compiles various functions useful in glass and melting sciences.
 
 -   `Henry(A,B,T)`: Solubility of gas in a glass forming liquid from the Henry's law given by
     
-    \[L=A\exp\left(\frac{B}{T}\right).\]
+    $`L=A\exp\left(\frac{B}{T}\right).`$
     
     The unit of \(L\) is mol/(m<sup>3</sup> Pa^&beta;) with beta the exponent in pressure depenence:
     
-    \[C=LP^\beta.\]
+    $`C=LP^\beta.`$
 
 -   `diffusivity(A,B,T)`: Diffusivity of gas in a glass forming liquid from the law given by
     
-    \[D=A\exp\left(-\frac{B}{T}\right).\]
+    $`D=A\exp\left(-\frac{B}{T}\right).`$
     
     The unit of \(D\) is m<sup>2</sup>/s.
 
@@ -182,17 +181,17 @@ This file compiles various functions useful in glass and melting sciences.
 
 -   `VFTcoefficients(Tm,Ts,Tg)`: This function determines the three coefficients, \(A\), \(B\) and \(T_0\) of the VFT's law
     
-    \[\log(\eta)=A+\frac{B}{T-T_0}.\]
+    $`\log(\eta)=A+\frac{B}{T-T_0}.`$
     
     The temperatures are given in Celsius or in Kelvin. The coefficient \(A\) is determined to have the viscosity in Pa.s.
 
 -   `Tsoft(Amu,Bmu,Tmu)`: Computation of the Littletown temperature based on the VFT's law of a glass forming liquid given by
     
-    \[\mu=A_\mu\exp\left(\frac{B_\mu}{T-T_\mu}\right).\]
+    $`\mu=A_\mu\exp\left(\frac{B_\mu}{T-T_\mu}\right).`$
 
 -   `Tglass(Amu,Bmu,Tmu)`: Computation of the glass transition temperature based on the VFT's law of a glass forming liquid given by
     
-    \[\mu=A_\mu\exp\left(\frac{B_\mu}{T-T_\mu}\right).\]
+    $`\mu=A_\mu\exp\left(\frac{B_\mu}{T-T_\mu}\right).`$
 
 -   `MolarMass(name)`: Molar mass of a chemical molecule given by name in kg/mol.
 
